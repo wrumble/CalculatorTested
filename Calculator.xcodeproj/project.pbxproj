@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8728488C1EFD5E1800E20AAD /* CalculatorBrainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8728488A1EFD5E1800E20AAD /* CalculatorBrainTests.swift */; };
+		8728488D1EFD5E1800E20AAD /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8728488B1EFD5E1800E20AAD /* ExtensionTests.swift */; };
+		8728488F1EFD5E2100E20AAD /* ViewControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8728488E1EFD5E2100E20AAD /* ViewControllerUITests.swift */; };
 		87D49C741EE5C40300D25CBE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D49C731EE5C40300D25CBE /* AppDelegate.swift */; };
 		87D49C761EE5C40300D25CBE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D49C751EE5C40300D25CBE /* ViewController.swift */; };
 		87D49C791EE5C40300D25CBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87D49C771EE5C40300D25CBE /* Main.storyboard */; };
@@ -34,6 +37,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8728488A1EFD5E1800E20AAD /* CalculatorBrainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorBrainTests.swift; sourceTree = "<group>"; };
+		8728488B1EFD5E1800E20AAD /* ExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionTests.swift; sourceTree = "<group>"; };
+		8728488E1EFD5E2100E20AAD /* ViewControllerUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerUITests.swift; sourceTree = "<group>"; };
 		87D49C701EE5C40300D25CBE /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D49C731EE5C40300D25CBE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87D49C751EE5C40300D25CBE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +115,8 @@
 		87D49C871EE5C40300D25CBE /* CalculatorTests */ = {
 			isa = PBXGroup;
 			children = (
+				8728488A1EFD5E1800E20AAD /* CalculatorBrainTests.swift */,
+				8728488B1EFD5E1800E20AAD /* ExtensionTests.swift */,
 				87D49C8A1EE5C40300D25CBE /* Info.plist */,
 			);
 			path = CalculatorTests;
@@ -117,6 +125,7 @@
 		87D49C921EE5C40300D25CBE /* CalculatorUITests */ = {
 			isa = PBXGroup;
 			children = (
+				8728488E1EFD5E2100E20AAD /* ViewControllerUITests.swift */,
 				87D49C951EE5C40300D25CBE /* Info.plist */,
 			);
 			path = CalculatorUITests;
@@ -207,12 +216,14 @@
 					87D49C831EE5C40300D25CBE = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = L3QZJU3LP7;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 87D49C6F1EE5C40300D25CBE;
 					};
 					87D49C8E1EE5C40300D25CBE = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = L3QZJU3LP7;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 87D49C6F1EE5C40300D25CBE;
 					};
@@ -281,6 +292,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8728488C1EFD5E1800E20AAD /* CalculatorBrainTests.swift in Sources */,
+				8728488D1EFD5E1800E20AAD /* ExtensionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8728488F1EFD5E2100E20AAD /* ViewControllerUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,11 +468,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = L3QZJU3LP7;
 				INFOPLIST_FILE = CalculatorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.waynerumble.CalculatorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Calculator.app/Calculator";
 			};
@@ -469,6 +485,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = L3QZJU3LP7;
 				INFOPLIST_FILE = CalculatorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -483,11 +500,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = L3QZJU3LP7;
 				INFOPLIST_FILE = CalculatorUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.waynerumble.CalculatorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Calculator;
 			};
@@ -497,6 +516,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = L3QZJU3LP7;
 				INFOPLIST_FILE = CalculatorUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
