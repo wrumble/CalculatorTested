@@ -11,76 +11,166 @@ import XCTest
 
 class CalculatorBrainTests: XCTestCase {
     
+    var brain: CalculatorBrain!
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testConstants() {
-        let symbolsAndValues = ["π": Double.pi, "e": M_E]
-        for (symbol, value) in symbolsAndValues {
-            let result = returnConstantValue(symbol: symbol)
-            
-            XCTAssertEqual(result, value.roundTo(places: 6))
-        }
-    }
-    
-    func testUnaryFunctions() {
-        let unaryConstant: Double = 5
-        let unaryFunctionsAndAnswers = ["log": 1.609438, "sin": -0.958924, "cos": 0.283662, "tan": -3.380515, "√": 2.236068, "±": -5]
-        for (symbol,answer) in unaryFunctionsAndAnswers {
-            let result = returnUnaryOperationResult(unaryOperator: unaryConstant, symbol: symbol)
-            
-            
-            XCTAssertEqual(result, answer)
-        }
-    }
-    
-    func testBinaryFunctions() {
-        let firstOperator: Double = 7
-        let secondOperator: Double = 2
-        let binaryFunctionsAndAnswers = ["+": 9, "-": 5, "x": 14, "÷": 3.5]
         
-//        let result = binaryFunctionsAndAnswers.reduce(0.0) { accumulator, operation in
-//            return returnBinaryOperationResult(firstOperator: accumulator, symbol: operation.key, secondOperator: operation.value)
-//        }
-        
-        for (symbol,answer) in binaryFunctionsAndAnswers {
-            let result = returnBinaryOperationResult(firstOperator: firstOperator, symbol: symbol, secondOperator: secondOperator)
-            
-            XCTAssertEqual(result, answer)
-        }
+        brain = CalculatorBrain()
     }
     
-    func testConstantsDescription() {
-        let constants = ["e", "π"]
-        constants.forEach { constant in
-            
-            let result = returnConstantDescription(symbol: constant)
-            XCTAssertEqual(result, constant)
-        }
+    func testBrainReturnsEulersConstantToSixDecimalPlaces() {
+        brain.performOperation("e")
+        
+        XCTAssertEqual(brain.result!, M_E.roundTo(places: 6))
     }
     
-    func testUnaryDescription() {
-        let unarySymbols = ["log", "sin", "cos", "tan", "√", "±"]
+    func testBrainReturnsPiToSixDecimalPlaces() {
+        brain.performOperation("π")
         
-        unarySymbols.forEach { symbol in
-            let description = "\(symbol)(5)"
-            let result = returnUnaryDescription(unaryOperator: 5, symbol: symbol)
+        XCTAssertEqual(brain.result!, Double.pi.roundTo(places: 6))
+    }
+    
+    func testBrainReturnsCorrectLogarithmResult() {
+        brain.setOperand(5)
+        brain.performOperation("log")
         
-            XCTAssertEqual(result, description)
-        }
+        XCTAssertEqual(brain.result!, 1.609438)
+    }
+    
+    func testBrainReturnsCorrectSineResult() {
+        brain.setOperand(5)
+        brain.performOperation("sin")
+        
+        XCTAssertEqual(brain.result!, -0.958924)
+    }
+    
+    func testBrainReturnsCorrectCosineResult() {
+        brain.setOperand(5)
+        brain.performOperation("cos")
+        
+        XCTAssertEqual(brain.result!, 0.283662)
+    }
+    
+    func testBrainReturnsCorrectTangentResult() {
+        brain.setOperand(5)
+        brain.performOperation("tan")
+        
+        XCTAssertEqual(brain.result!, -3.380515)
+    }
+    
+    func testBrainReturnsCorrectSquareRootResult() {
+        brain.setOperand(5)
+        brain.performOperation("√")
+        
+        XCTAssertEqual(brain.result!, 2.236068)
+    }
+    
+    func testBrainReturnsCorrectInverseResult() {
+        brain.setOperand(5)
+        brain.performOperation("±")
+        
+        XCTAssertEqual(brain.result!, -5)
+    }
+    
+    func testBrainAddsTwoDigits() {
+        brain.setOperand(7)
+        brain.performOperation("+")
+        brain.setOperand(2)
+        brain.performOperation("=")
+        
+        XCTAssertEqual(brain.result!, 9)
+    }
+    
+    func testBrainSubtractsTwoDigits() {
+        brain.setOperand(7)
+        brain.performOperation("-")
+        brain.setOperand(2)
+        brain.performOperation("=")
+        
+        XCTAssertEqual(brain.result!, 5)
+    }
+    
+    func testBrainMultipliesDigits() {
+        brain.setOperand(7)
+        brain.performOperation("x")
+        brain.setOperand(2)
+        brain.performOperation("=")
+        
+        XCTAssertEqual(brain.result!, 14)
+    }
+    
+    func testBrainDividesTwoDigits() {
+        brain.setOperand(7)
+        brain.performOperation("÷")
+        brain.setOperand(2)
+        brain.performOperation("=")
+        
+        XCTAssertEqual(brain.result!, 3.5)
+    }
+    
+    func testReturnsPiSymbolInDescription() {
+        brain.performOperation("π")
+        
+        XCTAssertEqual(brain.description!, "π")
+    }
+    
+    func testReturnsEulersConstantSymbolInDescription() {
+        brain.performOperation("e")
+        
+        XCTAssertEqual(brain.description!, "e")
+    }
+    
+    //Returns Log(5) as required for a unary description in the tasks
+    func testReturnsLogOperandInDescription() {
+        brain.setOperand(5)
+        brain.performOperation("log")
+        
+        XCTAssertEqual(brain.description!, "log(5)")
+    }
+    
+    //Returns Log(5) as required for a unary description in the tasks
+    func testReturnsSinOperandInDescription() {
+        brain.setOperand(5)
+        brain.performOperation("sin")
+        
+        XCTAssertEqual(brain.description!, "sin(5)")
+    }
+    
+    //Returns Log(5) as required for a unary description in the tasks
+    func testReturnsCosOperandInDescription() {
+        brain.setOperand(5)
+        brain.performOperation("cos")
+        
+        XCTAssertEqual(brain.description!, "cos(5)")
+    }
+    
+    //Returns Log(5) as required for a unary description in the tasks
+    func testReturnsTanOperandInDescription() {
+        brain.setOperand(5)
+        brain.performOperation("tan")
+        
+        XCTAssertEqual(brain.description!, "tan(5)")
+    }
+    
+    //Returns Log(5) as required for a unary description in the tasks
+    func testReturnsSquareRootOperandSymbolInDescription() {
+        brain.setOperand(5)
+        brain.performOperation("√")
+        
+        XCTAssertEqual(brain.description!, "√(5)")
+    }
+    
+    //Returns Log(5) as required for a unary description in the tasks
+    func testReturnsPlusMinusSymbolInDescription() {
+        brain.setOperand(5)
+        brain.performOperation("±")
+        
+        XCTAssertEqual(brain.description!, "±(5)")
     }
     
     // Example found in task 7.a --- touching 7 + would show “7 + ...” (with 7 still in the display)
-    // FIXME Display is set at this level in the view controller as shown to do so in the lectures. Will refactor it after the second project task if he does not require it in setup.
     func testExampleSevenA() {
-        var brain = CalculatorBrain()
         brain.setOperand(7)
         brain.performOperation("+")
         let description = brain.description!
@@ -90,7 +180,6 @@ class CalculatorBrainTests: XCTestCase {
     
     // Example found in task 7.b --- 7 + 9 would show “7 + ...” (9 in the display)
     func testExampleSevenB() {
-        var brain = CalculatorBrain()
         brain.setOperand(7)
         brain.performOperation("+")
         brain.setOperand(9)
@@ -103,7 +192,6 @@ class CalculatorBrainTests: XCTestCase {
     
     //Example found in task 7.c --- c. 7 + 9 = would show “7 + 9 =” (16 in the display)
     func testExampleSevenC() {
-        var brain = CalculatorBrain()
         brain.setOperand(7)
         brain.performOperation("+")
         brain.setOperand(9)
@@ -117,7 +205,6 @@ class CalculatorBrainTests: XCTestCase {
     
     //Example found in task 7.d --- 7 + 9 = √ would show “√(7 + 9) =” (4 in the display)
     func testExampleSevenD() {
-        var brain = CalculatorBrain()
         brain.setOperand(7)
         brain.performOperation("+")
         brain.setOperand(9)
@@ -132,7 +219,6 @@ class CalculatorBrainTests: XCTestCase {
     
     //Example found in task 7.e --- 7 + 9 = √ + 2 = would show “√(7 + 9) + 2 =” (6 in the display)
     func testExampleSevenE() {
-        var brain = CalculatorBrain()
         brain.setOperand(7)
         brain.performOperation("+")
         brain.setOperand(9)
@@ -150,7 +236,6 @@ class CalculatorBrainTests: XCTestCase {
     
     //Example found in task 7.f --- 7 + 9 √ would show “7 + √(9) ...” (3 in the display)
     func testExampleSevenF() {
-        var brain = CalculatorBrain()
         brain.setOperand(7)
         brain.performOperation("+")
         brain.setOperand(9)
@@ -164,7 +249,6 @@ class CalculatorBrainTests: XCTestCase {
     
     //Example found in task 7.g --- 7 + 9 √ = would show “7 + √(9) =“ (10 in the display)
     func testExampleSevenG() {
-        var brain = CalculatorBrain()
         brain.setOperand(7)
         brain.performOperation("+")
         brain.setOperand(9)
@@ -179,7 +263,6 @@ class CalculatorBrainTests: XCTestCase {
     
     //Example found in task 7.h --- 7 + 9 = + 6 = + 3 = would show “7 + 9 + 6 + 3 =” (25 in the display)
     func testExampleSevenH() {
-        var brain = CalculatorBrain()
         brain.setOperand(7)
         brain.performOperation("+")
         brain.setOperand(9)
@@ -199,7 +282,6 @@ class CalculatorBrainTests: XCTestCase {
     
     //Example found in task 7.i --- 7 + 9 = √ 6 + 3 = would show “6 + 3 =” (9 in the display)
     func testExampleSevenI() {
-        var brain = CalculatorBrain()
         brain.setOperand(7)
         brain.performOperation("+")
         brain.setOperand(9)
@@ -218,7 +300,6 @@ class CalculatorBrainTests: XCTestCase {
     
     //Example found in task 7.j --- 5 + 6 = 7 3 would show “5 + 6 =” (73 in the display)
     func testExampleSevenJ() {
-        var brain = CalculatorBrain()
         brain.setOperand(5)
         brain.performOperation("+")
         brain.setOperand(6)
@@ -234,7 +315,6 @@ class CalculatorBrainTests: XCTestCase {
     
     //Example found in task 7.k --- 4 × π = would show “4 x π =“ (12.566371 in the display)
     func testExampleSevenK() {
-        var brain = CalculatorBrain()
         brain.setOperand(4)
         brain.performOperation("x")
         brain.performOperation("π")
@@ -244,46 +324,5 @@ class CalculatorBrainTests: XCTestCase {
         
         XCTAssertEqual(description, "4xπ=")
         XCTAssertEqual(result, 12.566371)
-    }
-        
-    //Helper Methods
-    func returnConstantDescription(symbol: String) -> String {
-        var brain = CalculatorBrain()
-        brain.performOperation(symbol)
-        
-        return brain.description!
-    }
-    
-    func returnUnaryDescription(unaryOperator: Double, symbol: String) -> String {
-        var brain = CalculatorBrain()
-        brain.setOperand(unaryOperator)
-        brain.performOperation(symbol)
-        
-        return brain.description!
-    }
-    
-    func returnConstantValue(symbol: String) -> Double {
-        var brain = CalculatorBrain()
-        brain.performOperation(symbol)
-        
-        return brain.result!
-    }
-    
-    func returnUnaryOperationResult(unaryOperator: Double, symbol: String) -> Double {
-        var brain = CalculatorBrain()
-        brain.setOperand(unaryOperator)
-        brain.performOperation(symbol)
-        
-        return brain.result!
-    }
-    
-    func returnBinaryOperationResult(firstOperator: Double, symbol: String, secondOperator: Double) -> Double {
-        var brain = CalculatorBrain()
-        brain.setOperand(firstOperator)
-        brain.performOperation(symbol)
-        brain.setOperand(secondOperator)
-        brain.performOperation("=")
-        
-        return brain.result!
     }
 }

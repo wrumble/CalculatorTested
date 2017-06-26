@@ -138,5 +138,5 @@ struct CalculatorBrain {
             description = nil
         }
         accumulator = operand
-    }
+    }    
 }

@@ -20,8 +20,7 @@ class ViewController: UIViewController {
     var displayValue: Double {
         get {
             return Double(mainDisplay.text!) ?? 0
-        }
-        set {
+        } set {
             mainDisplay.text = String(newValue.cleanValue)
         }
     }
@@ -34,23 +33,31 @@ class ViewController: UIViewController {
             mainDisplay.text = textCurrentlyInDisplay + digit
         } else {
             mainDisplay.text = digit
-            if digit == "." {
-                mainDisplay.text = "0."
-            }
+            addZeroInFrontOfDecimalPoint(digit: digit)
             userIsInTheMiddleOfTypingNumber = true
         }
         updateCurrentInputDisplay()
     }
     
-    @IBAction func backSpaceButtonWasPressed(_ sender: UIButton) {
-        if mainDisplay.text != "" || (mainDisplay.text?.characters.count)! > 0 {
-            var newDisplayText = String(mainDisplay.text!.characters.dropLast(1))
-            if newDisplayText.characters.count == 0 {
-                newDisplayText = ""
-                userIsInTheMiddleOfTypingNumber = false
-            }
-            mainDisplay.text = newDisplayText
+    private func addZeroInFrontOfDecimalPoint(digit: String) {
+        if digit == "." {
+            mainDisplay.text = "0."
         }
+    }
+    
+    @IBAction func backSpaceButtonWasPressed(_ sender: UIButton) {
+        if mainDisplay.text != "" {
+            removeLastCharacterFromDisplay()
+        }
+    }
+    
+    private func removeLastCharacterFromDisplay() {
+        var newDisplayText = String(mainDisplay.text!.characters.dropLast(1))
+        if newDisplayText.characters.count == 0 {
+            newDisplayText = ""
+            userIsInTheMiddleOfTypingNumber = false
+        }
+        mainDisplay.text = newDisplayText
     }
     
     @IBAction func decimalPointButtonWasPressed(_ sender: UIButton) {
@@ -62,18 +69,30 @@ class ViewController: UIViewController {
     }
     
     @IBAction func performOperation(_ sender: UIButton) {
+        setOperandIfUserIsStillTyping()
+        performOperationWithMathmaticalSymbol(sender.currentTitle)
+        displayResultIfAvailable()
+        updateCurrentInputDisplay()
+    }
+    
+    private func setOperandIfUserIsStillTyping() {
         if userIsInTheMiddleOfTypingNumber {
             brain.setOperand(displayValue)
             userIsInTheMiddleOfTypingNumber = false
         }
-        if let mathmaticalSymbol = sender.currentTitle {
+    }
+    
+    private func performOperationWithMathmaticalSymbol(_ mathmaticalSymbol: String?) {
+        if let mathmaticalSymbol = mathmaticalSymbol {
             brain.performOperation(mathmaticalSymbol)
             decimalPointButton.isEnabled = true
         }
+    }
+    
+    private func displayResultIfAvailable() {
         if let result = brain.result {
             displayValue = result
         }
-        updateCurrentInputDisplay()
     }
     
     @IBAction func clearButtonWasPressed(_ sender: UIButton) {
@@ -88,7 +107,6 @@ class ViewController: UIViewController {
                 currentInputDisplay.text = "Input"
                 return
         }
-        
         currentInputDisplay.text = brainDescription
     }
 }
